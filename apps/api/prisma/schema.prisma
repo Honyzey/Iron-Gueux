@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 1. Le serveur Discord
+model Guild {
+  id String @id // Discord guild ID
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relation 1-to-1 vers les modules
+  economyConfig GuildEconomyConfig?
+  members Member[]
+}
+
+// 2. Sous-table pour la configuration de l'économie du serveur
+model GuildEconomyConfig {
+  guildId String @id // Discord guild ID
+  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  enabled Boolean @default(false) // Si le module est actif ou non
+
+  dailyAmount Int @default(20) // Montant du crédit quotidien
+  workMin Int @default(12) // Montant minimum du crédit pour le travail
+  workMax Int @default(20) // Montant maximum du crédit pour le travail
+  startingCredit Int @default(15) // Crédit initial pour les nouveaux membres
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Member {
+  id String // Discord user ID
+  guildId String // Discord guild ID
+  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  economy MemberEconomy?
+
+  @@id([id, guildId])
+}
+
+model MemberEconomy {
+  memberId String // Discord user ID
+  guildId String // Discord guild ID
+  member Member @relation(fields: [memberId, guildId], references: [id, guildId], onDelete: Cascade)
+
+  credit Int @default(0) // Crédit actuel du membre
+  lastDaily DateTime? // null si jamais déclarer
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([memberId, guildId])
+}

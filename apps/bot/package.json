@@ -1,0 +1,18 @@
+{
+	"name": "iron-gueux",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "src/index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js"
+	},
+	"dependencies": {
+		"@sapphire/framework": "5.5.1",
+		"discord.js": "14.27.0",
+		"dotenv": "17.4.2"
+	},
+	"devDependencies": {
+		"nodemon": "3.1.14"
+	}
+}

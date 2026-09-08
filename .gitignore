@@ -1,0 +1,14 @@
+# Dépendances (dans tous les sous-projets)
+node_modules
+**/node_modules
+
+# Variables d'environnement (chaque app aura son propre .env)
+.env
+**/.env
+
+# Prisma (généré automatiquement, spécifique à l'API)
+**/generated
+
+# Logs et fichiers temporaires
+*.log
+.DS_Store

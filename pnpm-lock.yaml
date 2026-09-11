@@ -50,6 +50,9 @@ importers:
 
   apps/bot:
     dependencies:
+      '@iron-gueux/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@sapphire/framework':
         specifier: 5.5.1
         version: 5.5.1
@@ -64,7 +67,11 @@ importers:
         specifier: 3.1.14
         version: 3.1.14
 
-  packages/api-client: {}
+  packages/api-client:
+    dependencies:
+      dotenv:
+        specifier: 17.4.2
+        version: 17.4.2
 
 packages:
 
